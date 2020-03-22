@@ -75,7 +75,7 @@ typed-ast = ">=1.4.0"
 d = ["aiohttp (>=3.3.2)", "aiohttp-cors"]
 
 [[package]]
-category = "dev"
+category = "main"
 description = "Validate configuration and produce human readable error messages."
 name = "cfgv"
 optional = false
@@ -83,7 +83,7 @@ python-versions = ">=3.6.1"
 version = "3.1.0"
 
 [[package]]
-category = "dev"
+category = "main"
 description = "Composable command line interface toolkit"
 name = "click"
 optional = false
@@ -334,7 +334,7 @@ checkqa-mypy = ["mypy (v0.761)"]
 testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "requests", "xmlschema"]
 
 [[package]]
-category = "dev"
+category = "main"
 description = "YAML parser and emitter for Python"
 name = "pyyaml"
 optional = false
@@ -470,7 +470,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "8c1e452e0530fe01b27d5f072295cc45cfb892a81fb314e394637a1893c0c1c3"
+content-hash = "50369767c1f46dd8276aab1d804ec88c90509f140976d7ddff3ea647753ff862"
 python-versions = "^3.7"
 
 [metadata.files]

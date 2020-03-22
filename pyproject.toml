@@ -9,6 +9,8 @@ license = "MIT"
 python = "^3.7"
 clint = "^0.5.1"
 gitpython = "^3.1.0"
+cfgv = "^3.1.0"
+pyyaml = "^5.3.1"
 
 [tool.poetry.dev-dependencies]
 tox = "^3.14.5"
