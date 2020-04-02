@@ -35,7 +35,7 @@ RepoStatus = namedtuple(
 class RepoTool:
     """Repository management tool"""
 
-    def __init__(self, path: Union[Path, str], expected_origin):
+    def __init__(self, path: Union[Path, str], expected_origin=None):
         try:
             self._repo = git.Repo(path=path, search_parent_directories=True)
         except git.InvalidGitRepositoryError:
@@ -43,14 +43,16 @@ class RepoTool:
         except git.NoSuchPathError:
             raise NotFound()
 
-        try:
-            origin = self._repo.remote("origin")
-        except ValueError:
-            raise WrongOrigin()
+        # Validate origin if provided
+        if expected_origin:
+            try:
+                origin = self._repo.remote("origin")
+            except ValueError:
+                raise WrongOrigin()
 
-        origin_urls = list(origin.urls)
-        if expected_origin not in origin_urls:
-            raise WrongOrigin(origin_urls)
+            origin_urls = list(origin.urls)
+            if expected_origin not in origin_urls:
+                raise WrongOrigin(origin_urls)
 
         self._path = Path(self._repo.working_tree_dir)
 
