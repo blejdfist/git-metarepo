@@ -24,6 +24,7 @@ wheel = "^0.34.2"
 black = "^19.10b0"
 pre-commit = "^2.2.0"
 pylint = "^2.4.4"
+flake8 = "^3.7.9"
 
 [tool.black]
 line-length = 120
