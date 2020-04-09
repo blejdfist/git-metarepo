@@ -15,6 +15,14 @@ def info(message):
     print(f"{Fore.BLUE}{message}{Style.RESET_ALL}")
 
 
+def error(message):
+    """
+    Print error message
+    :param message: Message to print
+    """
+    print(f"{Fore.RED}{message}{Style.RESET_ALL}")
+
+
 def item_symbol(symbol: str, message: str, *attributes: Union[Tuple[str, str], str]):
     """
     Format and print one item with custom symbol
@@ -50,10 +58,10 @@ def item_ok(message: str, *attributes: Union[Tuple[str, str], str]):
     item_symbol(f"{Fore.GREEN}{CHECK_MARK}", message, *attributes)
 
 
-def item_error(message: str, error: str):
+def item_error(message: str, err: str):
     """
     Format and print one error list item
     :param message: Message to print
-    :param error: Error details
+    :param err: Error details
     """
-    item_symbol(f"{Fore.RED}{CROSS_MARK}", message, f"{Fore.RED}{error}{Fore.RESET}")
+    item_symbol(f"{Fore.RED}{CROSS_MARK}", message, f"{Fore.RED}{err}{Fore.RESET}")

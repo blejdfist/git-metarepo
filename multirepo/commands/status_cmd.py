@@ -1,26 +1,14 @@
 """Status command"""
-from pathlib import Path
 import click
 
-from multirepo.manifest import load_manifest
-import multirepo.ui as ui
-import multirepo.vcs_git as vcs_git
+from multirepo import ui, vcs_git
+from multirepo.cli_decorators import require_manifest
 
 
 @click.command()
-def status():
+@require_manifest
+def status(manifest, root_path):
     """Show the status of all meta repositories"""
-    root_path = Path.cwd()
-
-    try:
-        # If we are in a repository, we want to look in
-        # the root of that repository for the manifest
-        main_repo = vcs_git.RepoTool(root_path)
-        root_path = main_repo.get_root_path()
-    except vcs_git.InvalidRepository:
-        pass
-
-    manifest = load_manifest(root_path / "manifest.yml")
     repos = manifest.get_repos()
 
     ui.info(f"Checking status for {len(repos)} repositories")
