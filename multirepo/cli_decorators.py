@@ -16,7 +16,7 @@ def require_manifest(func):
         try:
             # If we are in a repository, we want to look in
             # the root of that repository for the manifest
-            current_repo = vcs_git.RepoTool(Path.cwd())
+            current_repo = vcs_git.RepoTool(Path.cwd(), search_parent=True)
             root_path = current_repo.get_root_path()
         except vcs_git.InvalidRepository:
             # Since we are not in a repository we will look

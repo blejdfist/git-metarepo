@@ -82,3 +82,35 @@ def test_status_wrong_origin(tmpdir):
     result = runner.invoke(multirepo.cli.cli, ["status"])
     assert result.exit_code == 0
     assert "ORIGIN MISMATCH" in result.output
+
+
+def test_status_no_recurse_on_folder(tmpdir):
+    """Workspace is a repository and the configure repository is just an empty folder
+    Should report the repo as invalid and not recursively search in parents"""
+    helpers.create_commits(tmpdir)
+    helpers.create_manifest(tmpdir, TEST_MANIFEST)
+    tmpdir.chdir()
+
+    # Repository is just an empty folder
+    tmpdir.mkdir("the_repo")
+
+    runner = CliRunner()
+    result = runner.invoke(multirepo.cli.cli, ["status"])
+    assert result.exit_code == 0
+    assert "INVALID" in result.output
+
+
+def test_status_no_recurse_on_file(tmpdir):
+    """Workspace is a repository and the configure repository is just a file
+    Should report the repo as invalid and not recursively search in parents"""
+    helpers.create_commits(tmpdir)
+    helpers.create_manifest(tmpdir, TEST_MANIFEST)
+
+    # Repository is just an empty folder
+    tmpdir.join("the_repo").write("")
+    tmpdir.chdir()
+
+    runner = CliRunner()
+    result = runner.invoke(multirepo.cli.cli, ["status"])
+    assert result.exit_code == 0
+    assert "INVALID" in result.output

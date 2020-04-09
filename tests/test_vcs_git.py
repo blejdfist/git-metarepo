@@ -88,6 +88,6 @@ def test_git_detect_root(tmpdir):
     helpers.create_commits(tmpdir, REPO_URI)
 
     tmpdir.mkdir("a").mkdir("b").mkdir("c")
-    repo = vcs_git.RepoTool(tmpdir.join("a/b/c"), REPO_URI)
+    repo = vcs_git.RepoTool(tmpdir.join("a/b/c"), REPO_URI, search_parent=True)
 
     assert repo.get_root_path() == tmpdir

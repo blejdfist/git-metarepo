@@ -26,18 +26,21 @@ class InvalidRepository(GitError):
     """Path exists but was not a git repository"""
 
 
-RepoStatus = namedtuple(
-    "RepoStatus",
-    ["active_branch", "untracked_files", "head", "is_detached", "is_dirty"],
-)
+RepoStatus = namedtuple("RepoStatus", ["active_branch", "untracked_files", "head", "is_detached", "is_dirty"],)
 
 
 class RepoTool:
     """Repository management tool"""
 
-    def __init__(self, path: Union[Path, str], expected_origin=None):
+    def __init__(self, path: Union[Path, str], expected_origin=None, search_parent=False):
+        """
+        Repository tool
+        :param path: Path to git repository
+        :param expected_origin: Expected origin
+        :param search_parent: Recursively search parent for repository
+        """
         try:
-            self._repo = git.Repo(path=path, search_parent_directories=True)
+            self._repo = git.Repo(path=path, search_parent_directories=search_parent)
         except git.InvalidGitRepositoryError:
             raise InvalidRepository()
         except git.NoSuchPathError:
