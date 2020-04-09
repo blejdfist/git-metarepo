@@ -1,9 +1,10 @@
 """Test helpers"""
 import os
 import git
+import yaml
 
 
-def create_commits(path, origin_uri):
+def create_commits(path, origin_uri=None):
     """
     Creates a test repository with a bunch of commits
     :param path: Path where the repository should be created
@@ -12,7 +13,9 @@ def create_commits(path, origin_uri):
     """
     # Create repository
     repo = git.Repo.init(path)
-    repo.create_remote("origin", origin_uri)
+
+    if origin_uri:
+        repo.create_remote("origin", origin_uri)
 
     commits = []
     for i in range(0, 10):
@@ -24,3 +27,12 @@ def create_commits(path, origin_uri):
         commits.insert(0, repo.index.commit(f"Commit message {i}"))
 
     return commits, repo
+
+
+def create_manifest(tmpdir, data):
+    """
+    Write the manifest to a file
+    :param tmpdir: tmpdir from pytest
+    :param data: Manifest data
+    """
+    tmpdir.join("manifest.yml").write(yaml.dump(data))

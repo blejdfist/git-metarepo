@@ -14,4 +14,4 @@ cli.add_command(status)
 cli.add_command(list_repos)
 
 if __name__ == "__main__":
-    cli()
+    cli()  # pragma: no cover
