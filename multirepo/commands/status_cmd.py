@@ -8,7 +8,7 @@ from multirepo.cli_decorators import require_manifest
 @click.command()
 @require_manifest
 def status(manifest, root_path):
-    """Show the status of all meta repositories"""
+    """Show the status of all configured repositories"""
     repos = manifest.get_repos()
 
     ui.info(f"Checking status for {len(repos)} repositories")

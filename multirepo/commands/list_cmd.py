@@ -7,7 +7,7 @@ from multirepo.cli_decorators import require_manifest
 @click.command(name="list")
 @require_manifest
 def list_repos(manifest, _):
-    """List all configured meta repositories"""
+    """List all configured repositories"""
     repos = manifest.get_repos()
 
     ui.info(f"Listing {len(repos)} configured repositories")
