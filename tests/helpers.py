@@ -2,6 +2,7 @@
 import os
 import git
 import yaml
+import pathlib
 
 
 def create_commits(path, origin_uri=None):
@@ -36,3 +37,11 @@ def create_manifest(tmpdir, data):
     :param data: Manifest data
     """
     tmpdir.join("manifest.yml").write(yaml.dump(data))
+
+
+def write_and_commit(repo, filename):
+    full_path = pathlib.Path(repo.working_dir) / filename
+    full_path.write_text(f"Editing {filename}")
+
+    repo.index.add([filename])
+    return repo.index.commit(f"Wrote to {filename}")
