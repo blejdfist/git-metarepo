@@ -28,22 +28,20 @@ REPO_SCHEMA = cfgv.Map(
     "uri",
     cfgv.Required("uri", cfgv.check_string),
     cfgv.Required("path", cfgv.check_string),
+    cfgv.Optional("track", cfgv.check_string, default="master"),
 )
 
 # Schema for manifest
-MANIFEST_SCHEMA = cfgv.Map(
-    "Manifest",
-    None,
-    cfgv.RequiredRecurse("repos", cfgv.Array(REPO_SCHEMA, allow_empty=False)),
-)
+MANIFEST_SCHEMA = cfgv.Map("Manifest", None, cfgv.RequiredRecurse("repos", cfgv.Array(REPO_SCHEMA, allow_empty=False)),)
 
 
 class Repository:
     """Data for one repository"""
 
-    def __init__(self, uri: str, path: Union[os.PathLike, str]):
+    def __init__(self, uri: str, path: Union[os.PathLike, str], track: str):
         self._uri = uri
         self._path = Path(path)
+        self._track = track
 
     @property
     def uri(self):
@@ -59,11 +57,22 @@ class Repository:
         """
         return self._path
 
+    @property
+    def track(self) -> str:
+        """
+        :return: Tracked revision
+        """
+        return self._track
+
 
 class Manifest:
     """Manifest data"""
 
     def __init__(self, data: dict):
+        """
+        Construct manifest
+        :param data:
+        """
         self._repos = []
 
         for repo in data["repos"]:
@@ -93,6 +102,6 @@ def parse_manifest(data: Any) -> Manifest:
     """
     try:
         manifest_data = cfgv.validate(data, MANIFEST_SCHEMA)
-        return Manifest(manifest_data)
+        return Manifest(cfgv.apply_defaults(manifest_data, MANIFEST_SCHEMA))
     except cfgv.ValidationError as e:
         raise ValidationFailed(e)
