@@ -1,7 +1,7 @@
 """Test 'status' command"""
 import re
 from click.testing import CliRunner
-import multirepo.cli
+import metarepo.cli
 from tests import helpers
 
 TEST_MANIFEST_ORIGIN = "http://localhost/nop"
@@ -14,7 +14,7 @@ def test_status_not_found(tmpdir):
     tmpdir.chdir()
 
     runner = CliRunner()
-    result = runner.invoke(multirepo.cli.cli, ["status"])
+    result = runner.invoke(metarepo.cli.cli, ["status"])
     assert result.exit_code == 0
     assert "NOT FOUND" in result.output
 
@@ -26,7 +26,7 @@ def test_status_exists(tmpdir):
     tmpdir.chdir()
 
     runner = CliRunner()
-    result = runner.invoke(multirepo.cli.cli, ["status"])
+    result = runner.invoke(metarepo.cli.cli, ["status"])
     assert result.exit_code == 0
     assert re.search(r"head:.{0,5}master", result.output)
     assert re.search(r"dirty:.{0,5}False", result.output)
@@ -41,7 +41,7 @@ def test_status_exists_dirty(tmpdir):
     tmpdir.chdir()
 
     runner = CliRunner()
-    result = runner.invoke(multirepo.cli.cli, ["status"])
+    result = runner.invoke(metarepo.cli.cli, ["status"])
     assert result.exit_code == 0
     assert re.search(r"head:.{0,5}master", result.output)
     assert re.search(r"dirty:.{0,5}True", result.output)
@@ -55,7 +55,7 @@ def test_status_in_repo_subdirectory(tmpdir):
     tmpdir.mkdir("some").mkdir("folder").chdir()
 
     runner = CliRunner()
-    result = runner.invoke(multirepo.cli.cli, ["status"])
+    result = runner.invoke(metarepo.cli.cli, ["status"])
     assert result.exit_code == 0
     assert "the_repo" in result.output
 
@@ -67,7 +67,7 @@ def test_status_invalid_repository(tmpdir):
     tmpdir.chdir()
 
     runner = CliRunner()
-    result = runner.invoke(multirepo.cli.cli, ["status"])
+    result = runner.invoke(metarepo.cli.cli, ["status"])
     assert result.exit_code == 0
     assert "INVALID" in result.output
 
@@ -79,7 +79,7 @@ def test_status_wrong_origin(tmpdir):
     tmpdir.chdir()
 
     runner = CliRunner()
-    result = runner.invoke(multirepo.cli.cli, ["status"])
+    result = runner.invoke(metarepo.cli.cli, ["status"])
     assert result.exit_code == 0
     assert "ORIGIN MISMATCH" in result.output
 
@@ -95,7 +95,7 @@ def test_status_no_recurse_on_folder(tmpdir):
     tmpdir.mkdir("the_repo")
 
     runner = CliRunner()
-    result = runner.invoke(multirepo.cli.cli, ["status"])
+    result = runner.invoke(metarepo.cli.cli, ["status"])
     assert result.exit_code == 0
     assert "INVALID" in result.output
 
@@ -111,6 +111,6 @@ def test_status_no_recurse_on_file(tmpdir):
     tmpdir.chdir()
 
     runner = CliRunner()
-    result = runner.invoke(multirepo.cli.cli, ["status"])
+    result = runner.invoke(metarepo.cli.cli, ["status"])
     assert result.exit_code == 0
     assert "INVALID" in result.output

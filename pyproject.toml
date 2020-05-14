@@ -1,13 +1,13 @@
 [tool.poetry]
-name = "multirepo"
+name = "metarepo"
 version = "0.1.0"
-description = "Git Repository Manager"
+description = "Git Meta Repository Manager"
 authors = ["Jim Persson <jim@nurd.se>"]
 license = "MIT"
 
 [tool.poetry.scripts]
-multirepo = "multirepo.cli:cli"
-git-multirepo = "multirepo.cli:cli"
+metarepo = "metarepo.cli:cli"
+git-meta = "metarepo.cli:cli"
 
 [tool.poetry.dependencies]
 python = "^3.7"

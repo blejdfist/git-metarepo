@@ -1,7 +1,7 @@
 """List repositories command"""
 import click
-from multirepo import ui
-from multirepo.cli_decorators import require_manifest
+from metarepo import ui
+from metarepo.cli_decorators import require_manifest
 
 
 @click.command(name="list")

@@ -3,7 +3,7 @@ import os
 import pytest
 import git
 from click.testing import CliRunner
-import multirepo.cli
+import metarepo.cli
 from tests import helpers
 
 
@@ -33,7 +33,7 @@ def synced_repo_and_workspace(test_repo_and_workspace):
     :return: (destination repo object, source repo object, path to workspace)
     """
     source_repo, workspace = test_repo_and_workspace
-    result = CliRunner().invoke(multirepo.cli.cli, ["sync"])
+    result = CliRunner().invoke(metarepo.cli.cli, ["sync"])
     assert result.exit_code == 0
 
     dest_repo = git.Repo(workspace / "test")
@@ -45,7 +45,7 @@ def test_sync_basic(test_repo_and_workspace):
     source_repo, workspace = test_repo_and_workspace
 
     runner = CliRunner()
-    result = runner.invoke(multirepo.cli.cli, ["sync"])
+    result = runner.invoke(metarepo.cli.cli, ["sync"])
     assert result.exit_code == 0
 
     # Repo is created and is in sync
@@ -59,7 +59,7 @@ def test_sync_basic(test_repo_and_workspace):
     assert dest_repo.head.commit != source_repo.head.commit
 
     # Sync
-    result = runner.invoke(multirepo.cli.cli, ["sync"])
+    result = runner.invoke(metarepo.cli.cli, ["sync"])
     assert dest_repo.head.commit == source_repo.head.commit
     assert result.exit_code == 0
 
@@ -71,7 +71,7 @@ def test_sync_dirty(synced_repo_and_workspace):
     # Edit file in workspace
     (workspace / "test" / "output.txt").write(u"Changed")
 
-    result = CliRunner().invoke(multirepo.cli.cli, ["sync"])
+    result = CliRunner().invoke(metarepo.cli.cli, ["sync"])
     assert result.exit_code == 1
 
 
@@ -82,5 +82,5 @@ def test_sync_ahead(synced_repo_and_workspace):
     # Commit file in workspace
     helpers.write_and_commit(dest_repo, "output.txt")
 
-    result = CliRunner().invoke(multirepo.cli.cli, ["sync"])
+    result = CliRunner().invoke(metarepo.cli.cli, ["sync"])
     assert result.exit_code == 1

@@ -1,7 +1,7 @@
 """Test vcs_git module"""
 import pytest
 import git
-from multirepo import vcs_git
+from metarepo import vcs_git
 from tests import helpers
 
 REPO_URI = "git://127.0.0.1/repo"

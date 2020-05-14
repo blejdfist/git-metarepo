@@ -1,8 +1,8 @@
 """Status command"""
 import click
 
-from multirepo import ui, vcs_git
-from multirepo.cli_decorators import require_manifest
+from metarepo import ui, vcs_git
+from metarepo.cli_decorators import require_manifest
 
 
 @click.command()

@@ -7,7 +7,7 @@ from .commands.sync_cmd import sync
 
 @click.group()
 def cli():
-    """Base CLI group"""
+    """Metarepo is a tool to help you to keep multiple git repositories in sync and organized"""
 
 
 # Register commands

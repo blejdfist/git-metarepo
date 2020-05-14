@@ -2,7 +2,7 @@ import yaml
 import pytest
 import tempfile
 import os
-from multirepo import manifest
+from metarepo import manifest
 
 
 def test_manifest_not_existant():
@@ -29,9 +29,7 @@ def test_manifest_validate_failed():
 
 
 def test_manifest_parse_successful():
-    result = manifest.parse_manifest(
-        {"repos": [{"uri": "git://localhost/repo", "path": "my/path"}]}
-    )
+    result = manifest.parse_manifest({"repos": [{"uri": "git://localhost/repo", "path": "my/path"}]})
     repos = result.get_repos()
     assert len(repos) == 1
     assert repos[0].uri == "git://localhost/repo"
