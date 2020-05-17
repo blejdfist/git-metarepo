@@ -1,5 +1,6 @@
 """Command line user interface helpers"""
 from typing import Tuple, Union
+
 from colorama import Fore, Style
 
 CHECK_MARK = "\u2713"

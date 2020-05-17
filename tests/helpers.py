@@ -1,8 +1,9 @@
 """Test helpers"""
 import os
+import pathlib
+
 import git
 import yaml
-import pathlib
 
 
 def create_commits(path, origin_uri=None):

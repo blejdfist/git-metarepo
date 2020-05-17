@@ -1,7 +1,6 @@
 """Test 'list' command"""
-from click.testing import CliRunner
 import metarepo.cli
-
+from click.testing import CliRunner
 from tests import helpers
 
 

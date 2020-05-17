@@ -1,7 +1,8 @@
 """Test 'status' command"""
 import re
-from click.testing import CliRunner
+
 import metarepo.cli
+from click.testing import CliRunner
 from tests import helpers
 
 TEST_MANIFEST_ORIGIN = "http://localhost/nop"

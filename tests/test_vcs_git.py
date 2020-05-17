@@ -1,6 +1,6 @@
 """Test vcs_git module"""
-import pytest
 import git
+import pytest
 from metarepo import vcs_git
 from tests import helpers
 

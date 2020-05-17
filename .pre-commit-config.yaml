@@ -8,6 +8,10 @@ repos:
       - id: end-of-file-fixer
       - id: check-yaml
       - id: check-added-large-files
+  - repo: http://github.com/pre-commit/mirrors-isort
+    rev: v4.3.21
+    hooks:
+      - id: isort
   - repo: https://github.com/psf/black
     rev: 19.10b0
     hooks:

@@ -1,10 +1,10 @@
 """Manifest loading"""
-import yaml
 import os
-import cfgv
-
 from pathlib import Path
-from typing import Any, Union, List
+from typing import Any, List, Union
+
+import cfgv
+import yaml
 
 
 class ManifestError(Exception):

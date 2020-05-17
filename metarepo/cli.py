@@ -1,7 +1,8 @@
 """Command line interface"""
 import click
-from .commands.status_cmd import status
+
 from .commands.list_cmd import list_repos
+from .commands.status_cmd import status
 from .commands.sync_cmd import sync
 
 

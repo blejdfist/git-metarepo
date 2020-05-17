@@ -1,9 +1,10 @@
 """Test 'status' command"""
 import os
-import pytest
+
 import git
-from click.testing import CliRunner
 import metarepo.cli
+import pytest
+from click.testing import CliRunner
 from tests import helpers
 
 

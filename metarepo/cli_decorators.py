@@ -1,10 +1,9 @@
 """CLI decorators"""
+import functools
 import sys
 from pathlib import Path
-import functools
-from . import manifest
-from . import vcs_git
-from . import ui
+
+from . import manifest, ui, vcs_git
 
 
 def require_manifest(func):

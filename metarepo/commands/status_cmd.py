@@ -1,6 +1,5 @@
 """Status command"""
 import click
-
 from metarepo import ui, vcs_git
 from metarepo.cli_decorators import require_manifest
 

@@ -4,10 +4,9 @@ from pathlib import Path
 
 import click
 import git
-
 from metarepo import ui, vcs_git
-from metarepo.manifest import Manifest, Repository
 from metarepo.cli_decorators import require_manifest
+from metarepo.manifest import Manifest, Repository
 
 
 def do_sync_repo(repo_path: Path, repo_data: Repository):

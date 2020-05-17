@@ -1,7 +1,8 @@
 """GIT Utilities"""
-from typing import Union
 from collections import namedtuple
 from pathlib import Path
+from typing import Union
+
 import git
 
 
