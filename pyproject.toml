@@ -10,7 +10,7 @@ metarepo = "metarepo.cli:cli"
 git-meta = "metarepo.cli:cli"
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.6"
 gitpython = "^3.1.0"
 pyyaml = "^5.3.1"
 click = "^7.1.1"
