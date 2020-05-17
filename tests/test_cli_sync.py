@@ -7,8 +7,8 @@ import metarepo.cli
 from tests import helpers
 
 
-@pytest.fixture
-def test_repo_and_workspace(tmpdir):
+@pytest.fixture(name="test_repo_and_workspace")
+def fixture_test_repo_and_workspace(tmpdir):
     """
     Create a repository with a few test commits and a
     workspace containing a configured manifest
@@ -25,8 +25,8 @@ def test_repo_and_workspace(tmpdir):
     return source_repo, workspace
 
 
-@pytest.fixture
-def synced_repo_and_workspace(test_repo_and_workspace):
+@pytest.fixture(name="synced_repo_and_workspace")
+def fixture_synced_repo_and_workspace(test_repo_and_workspace):
     """
     Builds upon 'test_repo_and_workspace' and also performs an initial sync
     :param test_repo_and_workspace:
