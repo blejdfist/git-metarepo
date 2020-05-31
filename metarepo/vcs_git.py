@@ -95,11 +95,11 @@ class RepoTool:
 
         # If we have anything checked out locally
         # Retrieve which commits are ahead or behind the remote
-        if self._repo.heads:
-            local_head = str(self._repo.head.commit)
-            remote_head = str(result["fetch_head"])
-            result["ahead"] = list(self._repo.iter_commits(f"{remote_head}..{local_head}"))
-            result["behind"] = list(self._repo.iter_commits(f"{local_head}..{remote_head}"))
+        if ref in self._repo.heads:
+            local_ref = str(self._repo.heads[ref])
+            remote_ref = str(result["fetch_head"])
+            result["ahead"] = list(self._repo.iter_commits(f"{remote_ref}..{local_ref}"))
+            result["behind"] = list(self._repo.iter_commits(f"{local_ref}..{remote_ref}"))
 
         return FetchResult(**result)
 
