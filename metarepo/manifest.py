@@ -79,6 +79,9 @@ class Manifest:
             self._repos.append(Repository(**repo))
 
     def get_repos(self) -> List[Repository]:
+        """
+        :return: List of repositories in the manifest
+        """
         return self._repos
 
 
@@ -89,8 +92,8 @@ def load_manifest(path: Union[Path, str]) -> Manifest:
     :return: Manifest
     """
     try:
-        with open(path, "r") as fp:
-            return parse_manifest(yaml.load(fp, yaml.SafeLoader))
+        with open(path, "r") as manifest_file:
+            return parse_manifest(yaml.load(manifest_file, yaml.SafeLoader))
     except FileNotFoundError:
         raise NotFound()
 
@@ -103,5 +106,5 @@ def parse_manifest(data: Any) -> Manifest:
     try:
         manifest_data = cfgv.validate(data, MANIFEST_SCHEMA)
         return Manifest(cfgv.apply_defaults(manifest_data, MANIFEST_SCHEMA))
-    except cfgv.ValidationError as e:
-        raise ValidationFailed(e)
+    except cfgv.ValidationError as exception:
+        raise ValidationFailed(exception)
