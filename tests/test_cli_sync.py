@@ -48,6 +48,7 @@ def test_sync_basic(test_repo_and_workspace):
 
     runner = CliRunner()
     result = runner.invoke(metarepo.cli.cli, ["sync"])
+    assert "Checked out master" in result.output
     assert result.exit_code == 0
 
     # Repo is created and is in sync
@@ -55,15 +56,29 @@ def test_sync_basic(test_repo_and_workspace):
     assert dest_repo.head.commit == data["source_repo"].head.commit
 
     # Add additional commits
-    helpers.write_and_commit(data["source_repo"], "newfile.txt")
+    new_commit = helpers.write_and_commit(data["source_repo"], "newfile.txt")
 
     # Repo no longer in sync
-    assert dest_repo.head.commit != data["source_repo"].head.commit
+    previous_commit = dest_repo.head.commit
+    assert previous_commit != new_commit
 
     # Sync
     result = runner.invoke(metarepo.cli.cli, ["sync"])
-    assert dest_repo.head.commit == data["source_repo"].head.commit
     assert result.exit_code == 0
+
+    # Current commit has been updated
+    assert dest_repo.head.commit == new_commit
+
+    # Output mentions the updated commit
+    assert str(previous_commit)[0:7] in result.output
+    assert str(new_commit)[0:7] in result.output
+
+
+def test_sync_no_change(synced_repo_and_workspace):
+    """Syncing when no change is necessary"""
+    runner = CliRunner()
+    result = runner.invoke(metarepo.cli.cli, ["sync"])
+    assert "Already up to date" in result.output
 
 
 def test_sync_dirty(synced_repo_and_workspace):
