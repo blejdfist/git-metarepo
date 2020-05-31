@@ -20,7 +20,7 @@ def status(manifest, root_path):
             repo_status = repo.get_status()
             current_head = repo_status.active_branch.name if repo_status.active_branch else repo_status.head.hexsha[0:8]
 
-            ui.item_ok(repo_path, ("head", current_head), ("dirty", repo_status.is_dirty))
+            ui.item_ok(repo_path, ("track", repo_data.track), ("head", current_head), ("dirty", repo_status.is_dirty))
         except vcs_git.NotFound:
             ui.item_error(repo_path, "NOT FOUND")
         except vcs_git.InvalidRepository:
