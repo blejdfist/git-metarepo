@@ -1,11 +1,34 @@
 """Test 'status' command"""
 import os
+import sys
+from abc import ABC
 
 import git
 import metarepo.cli
 import pytest
 from click.testing import CliRunner
+from prompt_toolkit.application import create_app_session
+from prompt_toolkit.input import DummyInput
+from prompt_toolkit.output import DummyOutput
 from tests import helpers
+
+
+@pytest.fixture(autouse=True)
+def setup_stdout_redirection():
+    """
+    Prompt toolkit will try to create a VT100/Win32 output which expects stdout/stdout to have a file descriptor.
+    Since Click's CliRunner wraps stdout in io.TextIOWrapper that does not have one we will get an error.
+    Therefore we create a AppSession with an custom output module that simply writes to the current sys.stdout
+    """
+
+    class StdoutOutput(DummyOutput, ABC):
+        def write(self, data: str) -> None:
+            sys.stdout.write(data)
+
+    # Create app session
+    with create_app_session(input=DummyInput(), output=StdoutOutput()):
+        # Yield control to the test case
+        yield
 
 
 @pytest.fixture(name="test_repo_and_workspace")
