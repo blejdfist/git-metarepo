@@ -25,8 +25,8 @@ class NotFound(ManifestError):
 # Schema for repository
 REPO_SCHEMA = cfgv.Map(
     "Repo",
-    "uri",
-    cfgv.Required("uri", cfgv.check_string),
+    "url",
+    cfgv.Required("url", cfgv.check_string),
     cfgv.Required("path", cfgv.check_string),
     cfgv.Optional("track", cfgv.check_string, default="master"),
 )
@@ -38,17 +38,17 @@ MANIFEST_SCHEMA = cfgv.Map("Manifest", None, cfgv.RequiredRecurse("repos", cfgv.
 class Repository:
     """Data for one repository"""
 
-    def __init__(self, uri: str, path: Union[os.PathLike, str], track: str):
-        self._uri = uri
+    def __init__(self, url: str, path: Union[os.PathLike, str], track: str):
+        self._url = url
         self._path = Path(path)
         self._track = track
 
     @property
-    def uri(self):
+    def url(self):
         """
         :return: URI to repository
         """
-        return self._uri
+        return self._url
 
     @property
     def path(self) -> Path:

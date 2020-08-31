@@ -21,7 +21,7 @@ def fixture_test_repo_and_workspace(tmpdir):
     workspace = tmpdir / "workspace"
     workspace.mkdir()
 
-    helpers.create_manifest(workspace, {"repos": [{"uri": str(tmpdir / "source/.git"), "path": "test"}]})
+    helpers.create_manifest(workspace, {"repos": [{"url": str(tmpdir / "source/.git"), "path": "test"}]})
     os.chdir(str(workspace))
 
     return {"source_repo": source_repo, "workspace": workspace, "commits": commits, "tmpdir": tmpdir}
@@ -114,7 +114,7 @@ def test_sync_different_branch(synced_repo_and_workspace):
     # Modify manifest to track the new branch
     helpers.create_manifest(
         data["workspace"],
-        {"repos": [{"uri": str(data["tmpdir"] / "source/.git"), "path": "test", "track": "my_branch"}]},
+        {"repos": [{"url": str(data["tmpdir"] / "source/.git"), "path": "test", "track": "my_branch"}]},
     )
 
     # We are currently master

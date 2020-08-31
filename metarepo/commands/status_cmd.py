@@ -16,7 +16,7 @@ def status(manifest, root_path):
         repo_path = str(repo_data.path)
 
         try:
-            repo = vcs_git.RepoTool(root_path / repo_data.path, repo_data.uri)
+            repo = vcs_git.RepoTool(root_path / repo_data.path, repo_data.url)
             repo_status = repo.get_status()
             current_head = repo_status.active_branch.name if repo_status.active_branch else repo_status.head.hexsha[0:8]
 

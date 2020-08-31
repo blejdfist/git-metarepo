@@ -6,7 +6,7 @@ from click.testing import CliRunner
 from tests import helpers
 
 TEST_MANIFEST_ORIGIN = "http://localhost/nop"
-TEST_MANIFEST = {"repos": [{"uri": TEST_MANIFEST_ORIGIN, "path": "the_repo"}]}
+TEST_MANIFEST = {"repos": [{"url": TEST_MANIFEST_ORIGIN, "path": "the_repo"}]}
 
 
 def test_status_not_found(tmpdir):

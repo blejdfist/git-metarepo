@@ -4,19 +4,19 @@ import pytest
 from metarepo import vcs_git
 from tests import helpers
 
-REPO_URI = "git://127.0.0.1/repo"
+REPO_URL = "git://127.0.0.1/repo"
 
 
 def test_git_status_invalid(tmpdir):
     """Folder exists but is not a valid git repository"""
     with pytest.raises(vcs_git.InvalidRepository):
-        vcs_git.RepoTool(tmpdir, REPO_URI)
+        vcs_git.RepoTool(tmpdir, REPO_URL)
 
 
 def test_git_status_nonexistant(tmpdir):
     """Folder does not exist"""
     with pytest.raises(vcs_git.NotFound):
-        vcs_git.RepoTool(tmpdir.join("repo"), REPO_URI)
+        vcs_git.RepoTool(tmpdir.join("repo"), REPO_URL)
 
 
 def test_git_status_wrong_origin(tmpdir):
@@ -26,7 +26,7 @@ def test_git_status_wrong_origin(tmpdir):
     repo.create_remote("origin", "git://127.0.0.1/wrongrepo")
 
     with pytest.raises(vcs_git.WrongOrigin):
-        vcs_git.RepoTool(tmpdir, REPO_URI)
+        vcs_git.RepoTool(tmpdir, REPO_URL)
 
 
 def test_git_status_no_origin(tmpdir):
@@ -35,14 +35,14 @@ def test_git_status_no_origin(tmpdir):
     git.Repo.init(tmpdir)
 
     with pytest.raises(vcs_git.WrongOrigin):
-        vcs_git.RepoTool(tmpdir, REPO_URI)
+        vcs_git.RepoTool(tmpdir, REPO_URL)
 
 
 def test_git_status(tmpdir):
     """Check status of a clean repository"""
-    commits, _ = helpers.create_commits(tmpdir, REPO_URI)
+    commits, _ = helpers.create_commits(tmpdir, REPO_URL)
 
-    repo = vcs_git.RepoTool(tmpdir, REPO_URI)
+    repo = vcs_git.RepoTool(tmpdir, REPO_URL)
     status = repo.get_status()
 
     assert not status.is_dirty
@@ -54,10 +54,10 @@ def test_git_status(tmpdir):
 
 def test_git_status_dirty(tmpdir):
     """Check status of a repository with modified files"""
-    commits, _ = helpers.create_commits(tmpdir, REPO_URI)
+    commits, _ = helpers.create_commits(tmpdir, REPO_URL)
     tmpdir.join("output.txt").write("Edit")
 
-    repo = vcs_git.RepoTool(tmpdir, REPO_URI)
+    repo = vcs_git.RepoTool(tmpdir, REPO_URL)
     status = repo.get_status()
 
     assert status.is_dirty
@@ -69,11 +69,11 @@ def test_git_status_dirty(tmpdir):
 
 def test_git_status_detached_head(tmpdir):
     """Check status of a repository with a detached head"""
-    commits, test_repo = helpers.create_commits(tmpdir, REPO_URI)
+    commits, test_repo = helpers.create_commits(tmpdir, REPO_URL)
 
     test_repo.git.checkout(commits[3])
 
-    repo = vcs_git.RepoTool(tmpdir, REPO_URI)
+    repo = vcs_git.RepoTool(tmpdir, REPO_URL)
     status = repo.get_status()
 
     assert not status.is_dirty
@@ -85,9 +85,9 @@ def test_git_status_detached_head(tmpdir):
 
 def test_git_detect_root(tmpdir):
     """Get the root of the repository"""
-    helpers.create_commits(tmpdir, REPO_URI)
+    helpers.create_commits(tmpdir, REPO_URL)
 
     tmpdir.mkdir("a").mkdir("b").mkdir("c")
-    repo = vcs_git.RepoTool(tmpdir.join("a/b/c"), REPO_URI, search_parent=True)
+    repo = vcs_git.RepoTool(tmpdir.join("a/b/c"), REPO_URL, search_parent=True)
 
     assert repo.get_root_path() == tmpdir

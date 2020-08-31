@@ -13,4 +13,4 @@ def list_repos(manifest, _):
     ui.info(f"Listing {len(repos)} configured repositories")
 
     for repo in manifest.get_repos():
-        ui.item(f"{repo.path}", ("uri", repo.uri))
+        ui.item(f"{repo.path}", ("uri", repo.url))

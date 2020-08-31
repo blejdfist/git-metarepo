@@ -19,9 +19,9 @@ def do_sync_repo(repo_path: Path, repo_data: Repository):
     ui.item(str(repo_data.path), ("track", repo_data.track))
     if not repo_path.exists():
         repo = git.Repo.init(repo_path)
-        repo.create_remote("origin", repo_data.uri)
+        repo.create_remote("origin", repo_data.url)
 
-    repo = vcs_git.RepoTool(repo_path, repo_data.uri)
+    repo = vcs_git.RepoTool(repo_path, repo_data.url)
 
     # Fetch
     fetch_result = repo.fetch(repo_data.track)

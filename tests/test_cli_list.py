@@ -25,7 +25,7 @@ def test_list_invalid_manifest(tmpdir):
 
 def test_list_basic(tmpdir):
     """List configured repos in manifest"""
-    helpers.create_manifest(tmpdir, {"repos": [{"uri": "http://localhost/repo", "path": "the/path"}]})
+    helpers.create_manifest(tmpdir, {"repos": [{"url": "http://localhost/repo", "path": "the/path"}]})
     tmpdir.chdir()
     runner = CliRunner()
     result = runner.invoke(metarepo.cli.cli, ["list"])

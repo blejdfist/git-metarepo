@@ -30,15 +30,15 @@ def test_manifest_validate_failed():
 
 
 def test_manifest_parse_successful():
-    result = manifest.parse_manifest({"repos": [{"uri": "git://localhost/repo", "path": "my/path"}]})
+    result = manifest.parse_manifest({"repos": [{"url": "git://localhost/repo", "path": "my/path"}]})
     repos = result.get_repos()
     assert len(repos) == 1
-    assert repos[0].uri == "git://localhost/repo"
+    assert repos[0].url == "git://localhost/repo"
     assert str(repos[0].path) == "my/path"
 
 
 def test_manifest_load_successful():
-    test_manifest = {"repos": [{"uri": "git://localhost/repo", "path": "my/path"}]}
+    test_manifest = {"repos": [{"url": "git://localhost/repo", "path": "my/path"}]}
 
     with tempfile.TemporaryDirectory() as temp_dir:
         manifest_filename = os.path.join(temp_dir, "manifest.yml")
@@ -49,5 +49,5 @@ def test_manifest_load_successful():
 
         repos = result.get_repos()
         assert len(repos) == 1
-        assert repos[0].uri == "git://localhost/repo"
+        assert repos[0].url == "git://localhost/repo"
         assert str(repos[0].path) == "my/path"
