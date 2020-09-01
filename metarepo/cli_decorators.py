@@ -22,7 +22,7 @@ def require_manifest(func):
             # for the manifest in the current directory
             root_path = Path.cwd()
 
-        manifest_path = root_path / "manifest.yml"
+        manifest_path = root_path / manifest.MANIFEST_NAME
 
         try:
             loaded_manifest = manifest.load_manifest(manifest_path)

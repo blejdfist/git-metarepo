@@ -4,6 +4,7 @@ import pathlib
 
 import git
 import yaml
+from metarepo import manifest
 
 
 def create_commits(path, origin_uri=None):
@@ -37,7 +38,7 @@ def create_manifest(tmpdir, data):
     :param tmpdir: tmpdir from pytest
     :param data: Manifest data
     """
-    tmpdir.join("manifest.yml").write(yaml.dump(data))
+    tmpdir.join(manifest.MANIFEST_NAME).write(yaml.dump(data))
 
 
 def write_and_commit(repo, filename):
