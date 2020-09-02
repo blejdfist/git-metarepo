@@ -7,7 +7,7 @@ from .commands.status_cmd import status
 from .commands.sync_cmd import sync
 
 
-@click.group()
+@click.group(context_settings={"help_option_names": ["-h", "--help"]})
 def cli():
     """Metarepo is a tool to help you to keep multiple git repositories in sync and organized"""
 
