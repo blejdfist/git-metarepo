@@ -37,17 +37,32 @@ def test_manifest_parse_successful():
     assert str(repos[0].path) == "my/path"
 
 
-def test_manifest_load_successful():
+def test_manifest_load_successful(tmpdir):
     test_manifest = {"repos": [{"url": "git://localhost/repo", "path": "my/path"}]}
 
-    with tempfile.TemporaryDirectory() as temp_dir:
-        manifest_filename = os.path.join(temp_dir, "manifest.yml")
-        with open(manifest_filename, "w") as fp:
-            yaml.safe_dump(test_manifest, fp)
+    manifest_filename = tmpdir / "manifest.yml"
+    with open(manifest_filename, "w") as fp:
+        yaml.safe_dump(test_manifest, fp)
 
-        result = manifest.load_manifest(manifest_filename)
+    result = manifest.load_manifest(manifest_filename)
 
-        repos = result.get_repos()
-        assert len(repos) == 1
-        assert repos[0].url == "git://localhost/repo"
-        assert str(repos[0].path) == "my/path"
+    repos = result.get_repos()
+    assert len(repos) == 1
+    assert repos[0].url == "git://localhost/repo"
+    assert str(repos[0].path) == "my/path"
+
+
+def test_manifest_save(tmpdir):
+    repos = [
+        manifest.Repository(url="http://localhost/repo1", path="path/to/repo1"),
+        manifest.Repository(url="http://localhost/repo2", path="path/to/repo2", track="featureX"),
+    ]
+    manifest_to_save = manifest.Manifest(repos=repos)
+
+    filename = tmpdir / "manifest.yml"
+    assert not filename.exists()
+    manifest.save_manifest(manifest_to_save, filename)
+    assert filename.exists()
+    loaded_manifest = manifest.load_manifest(filename)
+
+    assert manifest_to_save == loaded_manifest

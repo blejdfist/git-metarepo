@@ -54,6 +54,28 @@ def load_manifest(path: Union[Path, str]) -> Manifest:
         raise NotFound()
 
 
+def save_manifest(manifest: Manifest, path: Union[Path, str]):
+    """
+    Save a manifest to a file
+    :param manifest: Manifest to save
+    :param path: Path to save to
+    """
+
+    def path_representer(dump: yaml.Dumper, dump_path: Path) -> str:
+        """Representer that dum path objects to YAML"""
+        return dump.represent_str(str(dump_path))
+
+    with path.open("w") as fp:
+        try:
+            dumper = yaml.SafeDumper(fp)
+            dumper.add_multi_representer(Path, path_representer)
+            dumper.open()
+            dumper.represent(manifest.dict(exclude_unset=True))
+            dumper.close()
+        finally:
+            dumper.dispose()
+
+
 def parse_manifest(data: Any) -> Manifest:
     """Validate data and construct a Manifest
     :param data: Manifest data to be validated
