@@ -1,10 +1,15 @@
 # Metarepo: An alternative to git submodules
 
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/blejdfist/git-metarepo/Python%20package)
+![PyPI - License](https://img.shields.io/pypi/l/metarepo)
+![PyPI](https://img.shields.io/pypi/v/metarepo)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/metarepo)
+
 Metarepo is used to manage dependencies on other git repositories when git submodules is not sufficient.
 It was inspired by the [repo](https://gerrit.googlesource.com/git-repo/) tool by Google but instead of requiring the
 manifest to be stored in its own repository, it is stored in the same repository.
 
-![Demo](assets/demo.gif)
+![Demo](https://raw.githubusercontent.com/blejdfist/git-metarepo/master/assets/demo.gif)
 
 ## Installation
 
