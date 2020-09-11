@@ -1,33 +1,41 @@
-# Metarepo: A tool for managing git repo dependencies
+# Metarepo: An alternative to git submodules
+
+Metarepo is used to manage dependencies on other git repositories when git submodules is not sufficient.
+It was inspired by the [repo](https://gerrit.googlesource.com/git-repo/) tool by Google but instead of requiring the
+manifest to be stored in its own repository, it is stored in the same repository.
+
+![Demo](assets/demo.gif)
 
 ## Installation
 
-
 ```bash
+# Install from PyPI
+pip3 install --upgrade git-metarepo
+
 # Install from git using PIP
 pip3 install --upgrade git+https://github.com/blejdfist/git-metarepo
 ```
-
 
 ## Usage
 
 You can run `metarepo` in two ways, standalone or using git. Both methods work the same and it is only a matter of personal taste.
 
 ```bash
-git meta -h
-metarepo -h
+git meta
+metarepo
 ```
 
-### Configuration
-
-Initial configuration can be created using the init command
-
+Create an initial `manifest.yml` configuration using the init command
 ```bash
 git meta init
 ```
 
-This will guide you through creating the initial `manifest.yml` file.
+Synchronize the repositories
+```bash
+git meta sync
+```
 
+## Manifest structure
 
 ```yml
 repos:
@@ -36,10 +44,8 @@ repos:
     track: master
 ```
 
-
 | Field     | Explanation              | Required             |
 | --------- | ------------------------ | :------------------: |
 | url       | Git URL to clone         | Yes                  |
 | path      | Where to clone the repo  | Yes                  |
 | track     | What branch/tag to track | No (default: master) |
-
