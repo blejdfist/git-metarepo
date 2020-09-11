@@ -1,16 +1,32 @@
 [tool.poetry]
 name = "metarepo"
-version = "0.1.0"
+version = "0.1.1"
 description = "Git Meta Repository Manager"
-authors = ["Jim Persson <jim@nurd.se>"]
+authors = ["Jim Ekman <jim@nurd.se>"]
 license = "MIT"
+keywords = ["git", "repository", "repo", "submodules"]
+readme = "README.md"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Topic :: Software Development :: Version Control :: Git",
+    "Topic :: Software Development :: Version Control"
+]
 
 [tool.poetry.scripts]
 metarepo = "metarepo.cli:cli"
 git-meta = "metarepo.cli:cli"
 
 [tool.poetry.dependencies]
-python = "^3.6"
+python = "^3.6.1"
 gitpython = "^3.1.0"
 pyyaml = "^5.3.1"
 click = "^7.1.1"
@@ -26,6 +42,7 @@ black = "^19.10b0"
 pre-commit = "^2.2.0"
 pylint = "^2.4.4"
 flake8 = "^3.7.9"
+tox-pyenv = "^1.1.0"
 
 [tool.black]
 line-length = 120
