@@ -27,7 +27,11 @@ def do_sync_repo(progress: ProgressBar, repo_path: Path, repo_data: Repository):
         repo = git.Repo.init(repo_path)
         repo.create_remote("origin", repo_data.url)
 
-    repo = vcs_git.RepoTool(repo_path, repo_data.url)
+    try:
+        repo = vcs_git.RepoTool(repo_path, repo_data.url)
+    except vcs_git.InvalidRepository:
+        pb.label = ANSI(ui.format_item_error(f"Unable to open {repo_data.path!s}", "Invalid repository"))
+        return False
 
     # Fetch
     fetch_result = repo.fetch(repo_data.track)
@@ -35,7 +39,7 @@ def do_sync_repo(progress: ProgressBar, repo_path: Path, repo_data: Repository):
     # Warn if ahead
     if fetch_result.ahead:
         pb.label = ANSI(
-            ui.format_item_error(f"Skipped {str(repo_data.path)}", err=f"Ahead by {len(fetch_result.ahead)} commit(s)")
+            ui.format_item_error(f"Skipped {repo_data.path!s}", err=f"Ahead by {len(fetch_result.ahead)} commit(s)")
         )
         return False
 
@@ -43,7 +47,7 @@ def do_sync_repo(progress: ProgressBar, repo_path: Path, repo_data: Repository):
 
     # Warn if dirty
     if status.is_dirty:
-        pb.label = ANSI(ui.format_item_error(f"Skipped {str(repo_data.path)}", err="Workspace is dirty"))
+        pb.label = ANSI(ui.format_item_error(f"Skipped {repo_data.path!s}", err="Workspace is dirty"))
         return False
 
     current_commit = status.head
