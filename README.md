@@ -26,7 +26,8 @@ Initial configuration can be created using the init command
 git meta init
 ```
 
-This will create the initial `manifest.yml` file.
+This will guide you through creating the initial `manifest.yml` file.
+
 
 ```yml
 repos:
@@ -34,3 +35,11 @@ repos:
     path: tools/pycodegen
     track: master
 ```
+
+
+| Field     | Explanation              | Required             |
+| --------- | ------------------------ | :------------------: |
+| url       | Git URL to clone         | Yes                  |
+| path      | Where to clone the repo  | Yes                  |
+| track     | What branch/tag to track | No (default: master) |
+
