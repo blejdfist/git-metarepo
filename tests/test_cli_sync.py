@@ -44,7 +44,7 @@ def fixture_test_repo_and_workspace(tmpdir):
     workspace = tmpdir / "workspace"
     workspace.mkdir()
 
-    helpers.create_manifest(workspace, {"repos": [{"url": str(tmpdir / "source/.git"), "path": "test"}]})
+    helpers.create_manifest(workspace, {"repos": [{"url": str(tmpdir / "source" / ".git"), "path": "test"}]})
     os.chdir(str(workspace))
 
     return {"source_repo": source_repo, "workspace": workspace, "commits": commits, "tmpdir": tmpdir}
@@ -146,7 +146,6 @@ def test_sync_different_branch(synced_repo_and_workspace):
 
     # Sync repo
     result = CliRunner().invoke(metarepo.cli.cli, ["sync"])
-    print(result.output)
     assert result.exit_code == 0
 
     # We expect to be at the tracked branch now

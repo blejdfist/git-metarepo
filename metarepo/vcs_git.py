@@ -1,4 +1,6 @@
 """GIT Utilities"""
+import configparser
+import os.path
 from collections import namedtuple
 from pathlib import Path
 from typing import Union
@@ -52,12 +54,15 @@ class RepoTool:
         if expected_origin:
             try:
                 origin = self._repo.remote("origin")
-            except ValueError:
+            except (ValueError, configparser.NoSectionError):
                 raise WrongOrigin()
 
             origin_urls = list(origin.urls)
             if expected_origin not in origin_urls:
-                raise WrongOrigin(origin_urls)
+                # Git on Windows can give paths with mixed slashes
+                # when using local file paths as repos
+                if expected_origin not in [os.path.normpath(url) for url in origin_urls]:
+                    raise WrongOrigin(origin_urls)
 
         self._path = Path(self._repo.working_tree_dir)
 

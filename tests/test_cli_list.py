@@ -1,4 +1,6 @@
 """Test 'list' command"""
+import os.path
+
 import metarepo.cli
 from click.testing import CliRunner
 from tests import helpers
@@ -30,5 +32,5 @@ def test_list_basic(tmpdir):
     runner = CliRunner()
     result = runner.invoke(metarepo.cli.cli, ["list"])
     assert result.exit_code == 0
-    assert "the/path" in result.output
+    assert os.path.normpath("the/path") in result.output
     assert "http://localhost/repo" in result.output

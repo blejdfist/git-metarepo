@@ -1,6 +1,7 @@
 """Command line user interface helpers"""
 from typing import Tuple, Union
 
+import click
 from colorama import Fore, Style
 
 CHECK_MARK = "\u2713"
@@ -21,7 +22,7 @@ def info(message):
     Print information message
     :param message: Message to print
     """
-    print(format_info(message))
+    click.echo(format_info(message))
 
 
 def format_error(message):
@@ -37,7 +38,7 @@ def error(message):
     Print error message
     :param message: Message to print
     """
-    print(format_error(message))
+    click.echo(format_error(message))
 
 
 def format_item_symbol(symbol: str, message: str, *attributes: Union[Tuple[str, str], str]):
@@ -95,7 +96,7 @@ def item(message: str, *attributes: Union[Tuple[str, str], str]):
     :param message: Message to format
     :param attributes: List of extra attributes to format
     """
-    print(format_item(message, *attributes))
+    click.echo(format_item(message, *attributes))
 
 
 def item_ok(message: str, *attributes: Union[Tuple[str, str], str]):
@@ -104,7 +105,7 @@ def item_ok(message: str, *attributes: Union[Tuple[str, str], str]):
     :param message: Message to format
     :param attributes: List of extra attributes to format
     """
-    print(format_item_ok(message, *attributes))
+    click.echo(format_item_ok(message, *attributes))
 
 
 def item_error(message: str, err: str):
@@ -113,4 +114,4 @@ def item_error(message: str, err: str):
     :param message: Message to format
     :param err: Error details
     """
-    print(format_item_error(message, err))
+    click.echo(format_item_error(message, err))

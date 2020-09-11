@@ -1,5 +1,6 @@
 import os
 import tempfile
+from pathlib import Path
 
 import pytest
 import yaml
@@ -34,7 +35,7 @@ def test_manifest_parse_successful():
     repos = result.get_repos()
     assert len(repos) == 1
     assert repos[0].url == "git://localhost/repo"
-    assert str(repos[0].path) == "my/path"
+    assert repos[0].path == Path("my/path")
 
 
 def test_manifest_load_successful(tmpdir):
@@ -49,7 +50,7 @@ def test_manifest_load_successful(tmpdir):
     repos = result.get_repos()
     assert len(repos) == 1
     assert repos[0].url == "git://localhost/repo"
-    assert str(repos[0].path) == "my/path"
+    assert repos[0].path == Path("my/path")
 
 
 def test_manifest_save(tmpdir):
