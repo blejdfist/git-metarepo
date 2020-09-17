@@ -14,7 +14,7 @@ def fixture_test_repo_and_workspace(tmpdir):
     workspace containing a configured manifest
 
     :param tmpdir: Directory where to create repo (provided by pytest automatically)
-    :return: tuple of (repo object, path to workspace)
+    :return: Dict with information
     """
     commits, source_repo = helpers.create_commits(tmpdir / "source")
     workspace = tmpdir / "workspace"
@@ -24,6 +24,27 @@ def fixture_test_repo_and_workspace(tmpdir):
     os.chdir(str(workspace))
 
     return {"source_repo": source_repo, "workspace": workspace, "commits": commits, "tmpdir": tmpdir}
+
+
+@pytest.fixture(name="test_repo_and_workspace_behind")
+def fixture_test_repo_and_workspace_behind(test_repo_and_workspace):
+    """
+    Builds upon 'test_repo_and_workspace' and ensures that the local repo is
+    checked out but with commits still left to fetch
+    :param test_repo_and_workspace:
+    :return: Dict with information
+    """
+    data = test_repo_and_workspace
+
+    # Clone repo to workspace
+    repo = git.Repo.init(data["workspace"])
+    repo.create_remote("origin", data["source_repo"].git_dir)
+    repo.remote("origin").fetch("master")
+    repo.create_head("master", "origin/master")
+    repo.heads["master"].checkout()
+
+    data["missing_commit"] = helpers.write_and_commit(data["source_repo"], "new_file")
+    return data
 
 
 @pytest.fixture(name="synced_repo_and_workspace")

@@ -36,13 +36,21 @@ FetchResult = namedtuple("FetchResult", ["fetch_head", "ahead", "behind"])
 class RepoTool:
     """Repository management tool"""
 
-    def __init__(self, path: Union[Path, str], expected_origin=None, search_parent=False):
+    def __init__(self, path: Union[Path, str], expected_origin=None, search_parent=False, allow_create=False):
         """
         Repository tool
         :param path: Path to git repository
         :param expected_origin: Expected origin
         :param search_parent: Recursively search parent for repository
+        :param allow_create: Create repository if it doesn't exist
         """
+        # In case caller passes a Path object we need to convert it to a string
+
+        # Create repository if it doesn't exist
+        if allow_create and not path.exists() and expected_origin:
+            repo = git.Repo.init(path)
+            repo.create_remote("origin", expected_origin)
+
         try:
             self._repo = git.Repo(path=path, search_parent_directories=search_parent)
         except git.InvalidGitRepositoryError:
@@ -121,7 +129,7 @@ class RepoTool:
             self._repo.heads[name].set_commit(ref)
 
         self._repo.heads[name].checkout()
-        # self._repo.head.reset(index=True, working_tree=True)
+        self._repo.head.reset(index=True, working_tree=True)
 
         if track:
             self._repo.heads[name].set_tracking_branch(track)
