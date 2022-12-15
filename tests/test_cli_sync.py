@@ -74,7 +74,7 @@ def test_sync_dirty(synced_repo_and_workspace):
     data = synced_repo_and_workspace
 
     # Edit file in workspace
-    (data["workspace"] / "test" / "output.txt").write(u"Changed")
+    (data["workspace"] / "test" / "output.txt").write("Changed")
 
     result = CliRunner().invoke(metarepo.cli.cli, ["sync"])
     assert result.exit_code == 1
