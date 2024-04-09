@@ -28,7 +28,7 @@ git-meta = "metarepo.cli:cli"
 [tool.poetry.dependencies]
 python = "^3.8.0"
 gitpython = "^3.1.29"
-pyyaml = "^5.4.0"
+pyyaml = "^6.0.0"
 click = "^8.0.0"
 colorama = "^0.4.3"
 prompt-toolkit = "==3.0.7"
